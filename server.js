@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/tick', function (req, res) {
+app.get('/', function (req, res) {
     res.send('Working');
  })
 
