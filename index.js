@@ -19,12 +19,12 @@ app.get('/', function (req, res) {
 
 
 app.get('/reconnectdb', function (req, res) {
-   // mongo.dbConnectionTest(res);
-   console.log(' label A')
-   const users = mongo.connect('users');
-   res.json({
-      data: users
-   });
+   mongo.dbConnectionTest(res);
+   // console.log(' label A')
+   // const users = mongo.connect('users');
+   // res.json({
+   //    data: users
+   // });
 });
 
 var server = app.listen(3000, function () {
