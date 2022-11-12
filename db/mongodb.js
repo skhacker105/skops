@@ -18,6 +18,18 @@ module.exports = {
         }
     },
 
+    reconnectToServer: function(res) {
+        console.log('Reconnecting to DB Server using -- ', uri);
+        try {
+            MongoClient.connect(uri, function (err, client) {
+                _db = client.db('skops');
+                res.send(err);
+            });
+        } catch(ex) {
+            res.send(ex);
+        }
+    },
+
     getDb: function () {
         return _db;
     }
