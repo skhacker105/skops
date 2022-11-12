@@ -17,16 +17,6 @@ app.get('/', function (req, res) {
    res.send('Working');
 });
 
-
-app.get('/reconnectdb', function (req, res) {
-   mongo.dbConnectionTest(res);
-   // console.log(' label A')
-   // const users = mongo.connect('users');
-   // res.json({
-   //    data: users
-   // });
-});
-
 var server = app.listen(3000, function () {
    var host = server.address().address
    var port = server.address().port
