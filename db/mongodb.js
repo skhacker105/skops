@@ -10,12 +10,6 @@ module.exports = {
         client.connect(err => {
             if (err) callback(err)
             _db = client.db("skops");
-            // users = _db.db("skops").collection(collection);
-            // users.find().toArray((err, result) => {
-            //     _db.close();
-            //     if (err) res.json({msg: 'User find error -- ' + err})
-            //     res.json(result);
-            // });
         });
     },
 
