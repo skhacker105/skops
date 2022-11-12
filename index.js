@@ -8,15 +8,19 @@ app.use(cors());
 app.use(express.json());
 app.use('/users', apiUsers);
 
-mongo.connectToServer(err => {
-  if (err) console.log('DB connection error')
-  else console.log('DB Connection successful')
-});
+// mongo.connectToServer(err => {
+//   if (err) console.log('DB connection error')
+//   else console.log('DB Connection successful')
+// });
 
 app.get('/', function (req, res) {
    res.send('Working');
 });
 
+
+app.get('/reconnectdb', function (req, res) {
+   mongo.dbConnectionTest(res);
+});
 
 var server = app.listen(3000, function () {
    var host = server.address().address
