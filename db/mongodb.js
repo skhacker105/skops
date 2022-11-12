@@ -2,7 +2,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 var username = encodeURIComponent("skhacker105");
 var password = encodeURIComponent("Sk8886161092#");
 const uri = `mongodb+srv://${username}:${password}@cluster0.edzzmnk.mongodb.net/?retryWrites=true&w=majority`;
-const _db = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+const _db = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 // var _db;
 
 module.exports = {
@@ -11,12 +11,17 @@ module.exports = {
             if (err) res.json({ error: 'Connection Error - ' + err })
             const users = _db.db("skops").collection("users");
             // perform actions on the collection object
-            // users.find().toArray((err, result) => {
-            //     if (err) res.json({msg: 'User find error -- ' + err})
-            //     res.json(result);
+            users.find().toArray((err, result) => {
+                _db.close();
+                if (err) res.json({msg: 'User find error -- ' + err})
+                res.json(result);
+            });
+            // let apos = await collection.find().toArray();
+            // _db.close();
+            // res.json({
+            //     message: 'DB Connection Successfull',
+            //     data:apos
             // });
-            _db.close();
-            res.send('DB Connection Successfull');
         });
     }
 };
