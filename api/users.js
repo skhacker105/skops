@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
         email: email,
         password: pass
     }).toArray((err, result) => {
-        if (err) throw err
+        if (err) res.send(err)
         if (result) {
             res.json(result);
         }
