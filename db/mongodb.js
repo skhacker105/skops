@@ -8,10 +8,14 @@ var _db;
 module.exports = {
 
     connectToServer: function (callback) {
-        MongoClient.connect(uri, function (err, client) {
-            _db = client.db('skops');
-            return callback(err);
-        });
+        try {
+            MongoClient.connect(uri, function (err, client) {
+                _db = client.db('skops');
+                return callback(err);
+            });
+        } catch(ex) {
+            return callback(ex);
+        }
     },
 
     getDb: function () {
