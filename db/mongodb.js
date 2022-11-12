@@ -20,11 +20,11 @@ module.exports = {
     },
 
     dbConnectionTest: function (res) {
-        _db.connect(err => {
+        client.connect(err => {
             if (err) res.json({ error: 'Connection Error - ' + err })
-            const users = _db.db("skops").collection("users");
+            const users = client.db("skops").collection("users");
             users.find().toArray((err, result) => {
-                _db.close();
+                client.close();
                 if (err) res.json({ msg: 'User find error -- ' + err })
                 res.json(result);
             });
