@@ -2,27 +2,37 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 var username = encodeURIComponent("skhacker105");
 var password = encodeURIComponent("Sk8886161092#");
 const uri = `mongodb+srv://${username}:${password}@cluster0.edzzmnk.mongodb.net/?retryWrites=true&w=majority`;
-const _db = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-// var _db;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+var _db;
 
 module.exports = {
+    connectToServer: function (callback) {
+        client.connect(err => {
+            if (err) callback(err)
+            _db = client.db("skops");
+            // users = _db.db("skops").collection(collection);
+            // users.find().toArray((err, result) => {
+            //     _db.close();
+            //     if (err) res.json({msg: 'User find error -- ' + err})
+            //     res.json(result);
+            // });
+        });
+    },
+
     dbConnectionTest: function (res) {
         _db.connect(err => {
             if (err) res.json({ error: 'Connection Error - ' + err })
             const users = _db.db("skops").collection("users");
-            // perform actions on the collection object
             users.find().toArray((err, result) => {
                 _db.close();
-                if (err) res.json({msg: 'User find error -- ' + err})
+                if (err) res.json({ msg: 'User find error -- ' + err })
                 res.json(result);
             });
-            // let apos = await collection.find().toArray();
-            // _db.close();
-            // res.json({
-            //     message: 'DB Connection Successfull',
-            //     data:apos
-            // });
         });
+    },
+
+    getDb: function () {
+        return _db;
     }
 };
 

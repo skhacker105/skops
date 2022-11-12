@@ -8,10 +8,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/users', apiUsers);
 
-// mongo.connectToServer(err => {
-//   if (err) console.log('DB connection error')
-//   else console.log('DB Connection successful')
-// });
+mongo.connectToServer(err => {
+  if (err) console.log('DB connection error')
+  else console.log('DB Connection successful')
+});
 
 app.get('/', function (req, res) {
    res.send('Working');
@@ -19,7 +19,12 @@ app.get('/', function (req, res) {
 
 
 app.get('/reconnectdb', function (req, res) {
-   mongo.dbConnectionTest(res);
+   // mongo.dbConnectionTest(res);
+   console.log(' label A')
+   const users = mongo.connect('users');
+   res.json({
+      data: users
+   });
 });
 
 var server = app.listen(3000, function () {
