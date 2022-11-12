@@ -16,7 +16,9 @@ router.get('/', (req, res) => {
             }
         });
     } catch (ex) {
-        res.send(ex)
+        res.json({
+            error: ex
+        })
     }
 
 });
