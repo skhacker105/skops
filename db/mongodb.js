@@ -1,7 +1,9 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
-var username = encodeURIComponent("skhacker105");
-var password = encodeURIComponent("Sk8886161092#");
-const uri = `mongodb+srv://${username}:${password}@cluster0.edzzmnk.mongodb.net/?retryWrites=true&w=majority`;
+const { MongoClient } = require('mongodb');
+require("dotenv").config();
+const { MONGO_URI, USER_NAME, PASSWORD } = process.env;
+var username = encodeURIComponent(USER_NAME);
+var password = encodeURIComponent(PASSWORD);
+const uri = MONGO_URI.replace('<username>', username).replace('<password>', password);
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 var _db;
 
