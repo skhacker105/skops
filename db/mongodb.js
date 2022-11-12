@@ -23,7 +23,10 @@ module.exports = {
         try {
             MongoClient.connect(uri, function (err, client) {
                 _db = client.db('skops');
-                res.send(err);
+                res.json({
+                    err: err,
+                    client, client
+                });
             });
         } catch(ex) {
             res.send(ex);
