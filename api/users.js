@@ -5,7 +5,7 @@ const skops_mongo = require('../db/mongodb');
 router.get('/', (req, res) => {
     const email = req.query.email;
     const pass = req.query.pass;
-    if (skops_mongo.getDb()) {
+    try {
         skops_mongo.getDb().collection('users').find({
             email: email,
             password: pass
@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
                 res.json(result);
             }
         });
-    } else {
-        res.send('No DB')
+    } catch (ex) {
+        res.send(ex)
     }
 
 });
