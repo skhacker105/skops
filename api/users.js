@@ -23,6 +23,7 @@ router.post('/login', (req, res) => {
         email: email,
         password: pass
     }).toArray((err, result) => {
+        console.log('err = ', err);
         if (err) res.json({ error: err })
         if (result) {
             console.log('result = ', result);
