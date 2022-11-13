@@ -6,9 +6,10 @@ const auth = require("../middleware/auth");
 const helper = require("../helper");
 
 router.get('/', (req, res) => {
-    skops_mongo.connectToServer(res => {
-        if (err) console.log('DB connection error')
+    skops_mongo.connectToServer(err => {
+        if (err) console.log('DB connection error = ', err)
         else console.log('DB Connection successful')
+
     });
     // const email = req.query.email;
     // const pass = req.query.pass;
