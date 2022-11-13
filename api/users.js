@@ -7,15 +7,28 @@ const helper = require("../helper");
 
 router.get('/', (req, res) => {
     skops_mongo.connectToServer(err => {
-        if (err) console.log('DB connection error = ', err)
-        else console.log('DB Connection successful')
-        res.json({
-            err: err,
-            msg: err ? 'Error' : 'DB Connection successful'
+        if (err) throw err
+        const email = req.query.email;
+        const pass = req.query.pass;
+        skops_mongo.getDb().collection('users').find({
+            email: email,
+            password: pass
+        }).toArray((err, result) => {
+            if (err) res.json({
+                email: email,
+                pass: pass,
+                error: err
+            })
+            console.log('result = ', result);
+            if (result) {
+                res.send(result);
+            }
         });
+        // res.json({
+        //     err: err,
+        //     msg: err ? 'Error' : 'DB Connection successful'
+        // });
     });
-    // const email = req.query.email;
-    // const pass = req.query.pass;
     // console.log('email = ', email);
     // console.log('pass = ', pass);
     // if (skops_mongo.getDb()) {
