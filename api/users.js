@@ -5,6 +5,36 @@ const jwt = require("jsonwebtoken");
 const auth = require("../middleware/auth");
 const helper = require("../helper");
 
+router.get('/', (req, res) => {
+    const email = req.query.email;
+    const pass = req.query.pass;
+    console.log('email = ', email);
+    console.log('pass = ', pass);
+    if (skops_mongo.getDb()) {
+        skops_mongo.getDb().collection('users').find({
+            email: email,
+            password: pass
+        }).toArray((err, result) => {
+            if (err) res.json({
+                email: email,
+                pass: pass,
+                error: err
+            })
+            console.log('result = ', result);
+            if (result) {
+                res.send(result);
+            }
+        });
+    } else {
+        res.json({
+            email: email,
+            pass: pass,
+            error: 'No DB found'
+        })
+    }
+
+});
+
 router.get('/info', (req, res) => {
     const token = helper.getToken(req);
     try {
