@@ -10,8 +10,9 @@ var _db;
 module.exports = {
     connectToServer: function (callback) {
         client.connect(err => {
-            if (err) callback(err)
             _db = client.db("skops");
+            if (err) callback(err)
+            else callback()
         });
     },
 
