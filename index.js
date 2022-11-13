@@ -4,14 +4,14 @@ const apiUsers = require('./api/users');
 const cors = require('cors');
 const mongo = require('./db/mongodb');
 
-app.use(cors());
-app.use(express.json());
-app.use('/users', apiUsers);
-
 mongo.connectToServer(err => {
   if (err) console.log('DB connection error')
   else console.log('DB Connection successful')
 });
+
+app.use(cors());
+app.use(express.json());
+app.use('/users', apiUsers);
 
 app.get('/', function (req, res) {
    res.send('Working');
