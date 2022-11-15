@@ -19,7 +19,6 @@ router.get('/', (req, res) => {
                 pass: pass,
                 error: err
             })
-            console.log('result = ', result);
             if (result) {
                 res.send(result);
             }
@@ -74,18 +73,18 @@ router.post('/login', (req, res) => {
         email: email,
         password: pass
     }).toArray((err, result) => {
-        console.log('err = ', err);
         if (err) res.json({ error: err })
-        if (result) {
-            console.log('result = ', result);
+        if (result && result.length > 0) {
             result[0]['token'] = jwt.sign(
                 result[0],
                 process.env.TOKEN_KEY,
                 {
-                    expiresIn: "2h",
+                    expiresIn: "1h",
                 }
             );
             res.send(result);
+        } else {
+            res.send('No result found');
         }
     });
 
