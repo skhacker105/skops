@@ -73,7 +73,7 @@ router.post('/login', (req, res) => {
         email: email,
         password: pass
     }).toArray((err, result) => {
-        if (err) res.json({ error: err })
+        if (err) res.status(401).json({ error: err })
         if (result && result.length > 0) {
             result[0]['token'] = jwt.sign(
                 result[0],
@@ -84,7 +84,7 @@ router.post('/login', (req, res) => {
             );
             res.send(result);
         } else {
-            res.send('No result found');
+            res.status(404).send('No result found');
         }
     });
 
