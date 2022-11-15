@@ -62,7 +62,7 @@ router.get('/info', (req, res) => {
         decoded['token'] = token;
         res.send(decoded);
     } catch (err) {
-        return res.status(401).send("Invalid Token");
+        return res.status(401).json({ message: "Invalid Token" });
     }
 });
 
@@ -84,14 +84,14 @@ router.post('/login', (req, res) => {
             );
             res.send(result);
         } else {
-            res.status(404).send('No result found');
+            res.status(404).json({ message: 'No result found' });
         }
     });
 
 });
 
 router.get('/validatetoken', auth, (req, res) => {
-    res.send('Valid Token')
+    res.json({ message: 'Valid Token' })
 });
 
 router.get('/logout', auth, (req, res) => {
