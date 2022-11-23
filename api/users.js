@@ -69,24 +69,28 @@ router.get('/info', (req, res) => {
 router.post('/login', (req, res) => {
     const email = req.body.email;
     const pass = req.body.pass;
-    skops_mongo.getDb().collection('users').find({
-        email: email,
-        password: pass
-    }).toArray((err, result) => {
-        if (err) res.status(401).json({ error: err })
-        if (result && result.length > 0) {
-            result[0]['token'] = jwt.sign(
-                result[0],
-                process.env.TOKEN_KEY,
-                {
-                    expiresIn: "1h",
-                }
-            );
-            res.send(result);
-        } else {
-            res.status(404).json({ message: 'No result found' });
-        }
-    });
+    try {
+        skops_mongo.getDb().collection('users').find({
+            email: email,
+            password: pass
+        }).toArray((err, result) => {
+            if (err) res.status(401).json({ error: err })
+            if (result && result.length > 0) {
+                result[0]['token'] = jwt.sign(
+                    result[0],
+                    process.env.TOKEN_KEY,
+                    {
+                        expiresIn: "1h",
+                    }
+                );
+                res.send(result);
+            } else {
+                res.status(404).json({ message: 'No result found' });
+            }
+        });
+    } catch (err) {
+        res.send(err);
+    }
 
 });
 
