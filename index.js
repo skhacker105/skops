@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const apiUsers = require('./api/users');
+const apiResumeBuilder = require('./api/builder');
 const cors = require('cors');
 const mongo = require('./db/mongodb');
 
@@ -12,6 +13,7 @@ mongo.connectToServer(err => {
 app.use(cors());
 app.use(express.json());
 app.use('/users', apiUsers);
+app.use('/apiBuilder', apiResumeBuilder);
 
 app.get('/', function (req, res) {
    res.send('Working');
