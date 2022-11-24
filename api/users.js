@@ -24,36 +24,7 @@ router.get('/', (req, res) => {
                 res.send(result);
             }
         });
-        // res.json({
-        //     err: err,
-        //     msg: err ? 'Error' : 'DB Connection successful'
-        // });
     });
-    // console.log('email = ', email);
-    // console.log('pass = ', pass);
-    // if (skops_mongo.getDb()) {
-    //     skops_mongo.getDb().collection('users').find({
-    //         email: email,
-    //         password: pass
-    //     }).toArray((err, result) => {
-    //         if (err) res.json({
-    //             email: email,
-    //             pass: pass,
-    //             error: err
-    //         })
-    //         console.log('result = ', result);
-    //         if (result) {
-    //             res.send(result);
-    //         }
-    //     });
-    // } else {
-    //     res.json({
-    //         email: email,
-    //         pass: pass,
-    //         error: 'No DB found'
-    //     })
-    // }
-
 });
 
 router.get('/info', (req, res) => {
@@ -88,15 +59,12 @@ router.post('/login', (req, res) => {
                                 expiresIn: "1h",
                             }
                         );
-                        console.log('user = ', err);
                         res.send(result);
                     } else {
-                        console.log('no user');
                         res.status(404).json({ message: 'No result found' });
                     }
                 });
             } catch (err) {
-                console.log('user error = ', err);
                 res.status(500).json({ message: err });
             }
         }
