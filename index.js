@@ -6,7 +6,7 @@ const cors = require('cors');
 const mongo = require('./db/mongodb');
 
 mongo.connectToServer(err => {
-  if (err) console.log('DB connection error')
+  if (err) console.log('DB connection error = ', err);
   else console.log('DB Connection successful')
 });
 
