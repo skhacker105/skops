@@ -83,12 +83,15 @@ router.post('/login', (req, res) => {
                         expiresIn: "1h",
                     }
                 );
+                console.log('user = ', err);
                 res.send(result);
             } else {
+                console.log('no user');
                 res.status(404).json({ message: 'No result found' });
             }
         });
     } catch (err) {
+        console.log('user error = ', err);
         res.status(500).json({ message: err });
     }
 
