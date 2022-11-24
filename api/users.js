@@ -69,31 +69,37 @@ router.get('/info', (req, res) => {
 router.post('/login', (req, res) => {
     const email = req.body.email;
     const pass = req.body.pass;
-    try {
-        skops_mongo.getDb().collection('users').find({
-            email: email,
-            password: pass
-        }).toArray((err, result) => {
-            if (err) res.status(401).json({ error: err })
-            if (result && result.length > 0) {
-                result[0]['token'] = jwt.sign(
-                    result[0],
-                    process.env.TOKEN_KEY,
-                    {
-                        expiresIn: "1h",
+    mongo.connectToServer(err => {
+        if (err) console.log('DB connection error = ', err);
+        else {
+            console.log('DB Connection successful')
+            try {
+                skops_mongo.getDb().collection('users').find({
+                    email: email,
+                    password: pass
+                }).toArray((err, result) => {
+                    if (err) res.status(401).json({ error: err })
+                    if (result && result.length > 0) {
+                        result[0]['token'] = jwt.sign(
+                            result[0],
+                            process.env.TOKEN_KEY,
+                            {
+                                expiresIn: "1h",
+                            }
+                        );
+                        console.log('user = ', err);
+                        res.send(result);
+                    } else {
+                        console.log('no user');
+                        res.status(404).json({ message: 'No result found' });
                     }
-                );
-                console.log('user = ', err);
-                res.send(result);
-            } else {
-                console.log('no user');
-                res.status(404).json({ message: 'No result found' });
+                });
+            } catch (err) {
+                console.log('user error = ', err);
+                res.status(500).json({ message: err });
             }
-        });
-    } catch (err) {
-        console.log('user error = ', err);
-        res.status(500).json({ message: err });
-    }
+        }
+    });
 
 });
 
