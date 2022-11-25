@@ -4,6 +4,8 @@ const apiUsers = require('./api/users');
 const apiResumeBuilder = require('./api/builder');
 const cors = require('cors');
 const mongo = require('./db/mongodb');
+var multer = require('multer');
+var upload = multer();
 
 mongo.connectToServer(err => {
   if (err) console.log('DB connection error = ', err);
@@ -12,6 +14,10 @@ mongo.connectToServer(err => {
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); 
+app.use(upload.array()); 
+app.use(express.static('public'));
+
 app.use('/users', apiUsers);
 app.use('/apiBuilder', apiResumeBuilder);
 
