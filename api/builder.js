@@ -3,7 +3,7 @@ const router = express.Router();
 const skops_mongo = require('../db/mongodb');
 const auth = require("../middleware/auth");
 
-router.get('/', auth, (req, res) => {
+router.get('/', (req, res) => {
     skops_mongo.connectToServer(err => {
         if (err) throw err
         skops_mongo.getDb().collection('resumeInfo').find({
