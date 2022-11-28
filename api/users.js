@@ -72,6 +72,23 @@ router.post('/login', (req, res) => {
 
 });
 
+router.put('/layout', auth, (req, res) => {
+    const userId = req.query.userId;
+    const layout = req.query.layout;
+    var myquery = { _id: userId };
+    var newvalues = { $set: {
+        layout: layout
+    } };
+    skops_mongo.getDb().collection('users').updateOne(myquery, newvalues, (err, res1) => {
+        if (err) res.json({
+            error: err
+        })
+        if (res1) {
+            res.json({ message: 'Updated Successfully' });
+        }
+    });
+});
+
 router.get('/validatetoken', auth, (req, res) => {
     res.json({ message: 'Valid Token' })
 });
