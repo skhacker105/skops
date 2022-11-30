@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
             error: err
         })
         res.json({
-            message: result.length
+            message: result ? result.length : 0
         });
     });
 });
