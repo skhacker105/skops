@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const ipAddress = req.socket.remoteAddress;
+    const ipAddress = req.ip;
     const query = { ipAddress: ipAddress };
     const data = req.body;
     data['ipAddress'] = ipAddress
@@ -32,6 +32,10 @@ router.post('/', (req, res) => {
             }
         });
     });
+});
+
+router.get('/ip', (req, res) => {
+    res.json([req.ip, req.socket.remoteAddress]);
 });
 
 module.exports = router;
