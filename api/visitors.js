@@ -3,7 +3,7 @@ const router = express.Router();
 const skops_mongo = require('../db/mongodb');
 
 router.get('/', (req, res) => {
-    mongo.connectToServer(err => {
+    skops_mongo.connectToServer(err => {
         skops_mongo.getDb().collection('visitor').find().toArray((err, result) => {
             if (err) res.json({
                 error: err
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
     data['ipAddress'] = ipAddress
     const update = { $set: data };
     const options = { upsert: true };
-    mongo.connectToServer(err => {
+    skops_mongo.connectToServer(err => {
         skops_mongo.getDb().collection('visitor').updateOne(query, update, options, (err, res1) => {
             if (err) res.json({
                 error: err
