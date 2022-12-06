@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const skops_mongo = require('../db/mongodb');
-const IP = require('ip');
 
 router.get('/', (req, res) => {
     skops_mongo.connectToServer(err => {
@@ -17,10 +16,10 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const ipAddress = IP.address();
+    const ipAddress = getIP(req);
     const query = { ipAddress: ipAddress };
     const data = req.body;
-    data['ipAddress'] = ipAddress
+    data['ipAddress'] = ipAddress;
     const update = { $set: data };
     const options = { upsert: true };
     skops_mongo.connectToServer(err => {
@@ -36,9 +35,11 @@ router.post('/', (req, res) => {
 });
 
 router.get('/ip', (req, res) => {
-    console.log('x-forwarded-for = ', req.headers['x-forwarded-for'])
-    res.send(req.connection.localAddress);
-    // res.json([req.ip, req.socket.remoteAddress]);
+    res.send(getIP(req));
 });
+
+function  getIP(req) {
+    return req.headers['x-forwarded-for'] || req.socket.localAddress;
+}
 
 module.exports = router;
