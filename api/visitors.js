@@ -20,7 +20,7 @@ router.post('/', (req, res) => {
     const ipAddress = IP.address();
     const query = { ipAddress: ipAddress };
     const data = req.body;
-    data['ipAddress'] = req. socket. localAddress; //ipAddress
+    data['ipAddress'] = ipAddress
     const update = { $set: data };
     const options = { upsert: true };
     skops_mongo.connectToServer(err => {
@@ -36,8 +36,8 @@ router.post('/', (req, res) => {
 });
 
 router.get('/ip', (req, res) => {
-    console.log('x-forwarded-for = ', IP.address())
-    res.send(IP.address());
+    console.log('x-forwarded-for = ', req. socket. localAddress)
+    res.send(req. socket. localAddress);
     // res.json([req.ip, req.socket.remoteAddress]);
 });
 
