@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 });
 
 router.get('/ip', (req, res) => {
-    console.log('x-forwarded-for = ', req.socket.localAddress)
+    console.log('x-forwarded-for = ', req.headers['x-forwarded-for'])
     res.send(req.socket.localAddress);
     // res.json([req.ip, req.socket.remoteAddress]);
 });
